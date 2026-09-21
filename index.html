@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Impose</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <h1>Impose</h1>
+
+    <details id="bleed-calc">
+      <summary>Document setup calculator (3mm trim, safe area, bleed)</summary>
+      <label class="setting-row">
+        Preset
+        <select id="bleed-preset">
+          <option value="custom">Custom</option>
+          <option value="a4">A4</option>
+          <option value="a5">A5</option>
+          <option value="a5-backpocket">A5 backpocket (130×190mm)</option>
+          <option value="a6" selected>A6</option>
+          <option value="a7">A7 (74×105mm)</option>
+          <option value="half-a5">Half A5 (65×90mm)</option>
+          <option value="pocket">Pocket (Field Notes, 3.5×5.5in)</option>
+        </select>
+      </label>
+      <label class="setting-row">
+        Trim width (mm)
+        <input type="number" id="bleed-trim-width" value="105" min="1" step="0.1" />
+      </label>
+      <label class="setting-row">
+        Trim height (mm)
+        <input type="number" id="bleed-trim-height" value="148" min="1" step="0.1" />
+      </label>
+      <div id="bleed-calc-output">
+        <p>Safe area: <strong id="bleed-out-safe"></strong> <button type="button" class="copy-link" id="bleed-copy-safe-btn">Copy</button></p>
+        <p>Full document incl. bleed: <strong id="bleed-out-full-mm"></strong> (<strong id="bleed-out-full-pt"></strong> in Keynote) <button type="button" class="copy-link" id="bleed-copy-pt-btn">Copy</button></p>
+      </div>
+    </details>
+
+    <div id="dropzone" tabindex="0">
+      <p id="dropzone-label">Drop a PDF here<br />or tap to choose a file</p>
+      <p id="file-name"></p>
+      <input type="file" id="file-input" accept="application/pdf" hidden />
+    </div>
+
+    <label id="format-select-row">
+      <span>Target format</span>
+      <select id="format-select">
+        <option value="a6" selected>A6-ish (2 folds)</option>
+        <option value="a5">A5-ish (1 fold)</option>
+      </select>
+    </label>
+
+    <label id="bleed-row">
+      <input type="checkbox" id="setting-bleed" checked autocomplete="off" />
+      3mm bleed (page already includes it; trim it before fitting/positioning)
+    </label>
+
+    <label id="cutmarks-row">
+      <input type="checkbox" id="setting-cutmarks" checked autocomplete="off" />
+      Add cut marks to cover (for trimming the bound booklet)
+    </label>
+
+    <label id="creep-row">
+      Creep compensation (mm/sheet)
+      <input type="number" id="setting-creep" value="0.1" min="0" max="1" step="0.05" autocomplete="off" />
+    </label>
+
+    <button id="make-btn" hidden>Make Print Sheets</button>
+
+    <div id="messages"></div>
+
+    <div id="downloads" hidden>
+      <a id="download-real" class="download-btn" download="print-sheets.pdf">Download Print Sheets</a>
+      <a id="download-proof" class="download-btn download-btn-secondary" download="proof-sheet.pdf">Download Proof Sheet</a>
+      <button type="button" id="print-direct-btn" class="download-btn download-btn-secondary">
+        Print Directly
+        <span id="print-direct-note">⚠️ remember: 100% and <span id="print-direct-edge">long edge</span> flip</span>
+      </button>
+    </div>
+  </div>
+
+  <script src="vendor/pdf-lib.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "impose-v0",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["dev-server.py"],
+      "port": 5174
+    }
+  ]
+}
